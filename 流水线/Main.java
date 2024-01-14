@@ -1,10 +1,7 @@
-package com.baseoop.zyf0113;
+import java.util.*;
 
-import java.util.ArrayList;
-
-class Main {
-
-    public static void main(String[] args) {
+public class Main {
+    public static void main (String[] args) {
         ArrayList<Task> tasks = new ArrayList<>();
         for (int i = 0; i < 500; i++) {
             tasks.add(new Task());
@@ -18,34 +15,22 @@ class Main {
         tb.start();
         tc.start();
 
-//        try {
-//            tc.join();
-//            tb.join();
-//            ta.join();
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-
-        new Thread() {
+        new thread() {
             @Override
             public void run() {
+                // 保证线程一直开着，可以不断加入新的线程任务继续执行
                 while (true) {
                     int num = 0;
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    for (int i = 0; i < tasks.size(); i++) {
-                        if (tasks.get(i).num == 40000) {
+
+                    for (Task task: tasks) {
+                        if (task.num == 40000) {
                             num++;
                         }
                     }
                     System.out.println("已完成任务：" + num);
                 }
+
             }
         }.start();
-
-
     }
 }

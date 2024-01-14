@@ -1,42 +1,27 @@
-package com.baseoop.zyf0113;
-
 import java.util.ArrayList;
 
-public class ThreadC extends Thread {
-    ArrayList<Task> tasks;
+public class ThreadC  extends Thread{
+    ArrayList<Task> task = new ArrayList<>();
 
-    public ThreadC(ArrayList<Task> tasks) {
-        this.tasks = tasks;
+    public ThreadC(ArrayList<Task> task) {
+        this.task = task;
     }
 
     @Override
     public void run() {
         while (true) {
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-            System.out.println("ThreadC - run");
             int count = 0;
-            for (int i = 0; i < tasks.size(); i++) {
-                try {
-                    Thread.sleep(5);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                Task task = tasks.get(i);
-                task.taskC();
-                if (task.fc) {
+            for(Task t: task) {
+                t.taskC();
+                if (t.fc) {
                     count++;
                 }
             }
-            System.out.println("已完成C任务：" + count);
-            if(count==tasks.size()){
-                System.out.println("C任务全部完成！");
-                break;
+
+            System.out.println("C已执行："+ count);
+            if (count == task.size()) {
+                System.out.println("C全部完成");
             }
         }
     }
-
 }
